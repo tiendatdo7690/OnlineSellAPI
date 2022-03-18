@@ -1,7 +1,11 @@
 package com.example.demo.controllers;
 
+import com.example.demo.entities.Role;
 import com.example.demo.entities.UserAccount;
+import com.example.demo.entitiesAPI.RoleAPI;
+import com.example.demo.entitiesAPI.UserAccountAPI;
 import com.example.demo.services.AccountService;
+import com.example.demo.services.UserAccount_RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,18 +26,40 @@ public class AccountRestController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private UserAccount_RoleService userAccount_roleService;
+
     @RequestMapping(value = "findbyusername/{username}" ,method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserAccount> findByUserName(@PathVariable String username) {
+    public ResponseEntity<UserAccountAPI> findByUserName(@PathVariable String username) {
 
         try {
-            //System.out.printf(username);
-            return new ResponseEntity<UserAccount>(accountService.findUserAccountByUserName(username),
+            UserAccount userAccount = accountService.findUserAccountByUserName(username);
+            return new ResponseEntity<UserAccountAPI>(new UserAccountAPI(userAccount.getId(),userAccount.getUserName(),
+                    userAccount.getPassWord(),userAccount.getStatus()),
                     HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<UserAccount>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<UserAccountAPI>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    @RequestMapping(value = "findrolebyusername/{username}" ,method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RoleAPI>> findRoleByUserName(@PathVariable String username) {
+
+        try {
+            UserAccount userAccount = accountService.findUserAccountByUserName(username);
+            List<RoleAPI> roles = new ArrayList<RoleAPI>();
+            userAccount_roleService.findAllByUserAccount(userAccount).forEach(e -> {
+                roles.add(new RoleAPI(e.getRole().getId(),e.getRole().getName()));
+            });
+            return new ResponseEntity<List<RoleAPI>>(roles,
+                    HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<List<RoleAPI>>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @RequestMapping(value = "findbcrypt/{pass}" ,method = RequestMethod.GET, produces = MimeTypeUtils.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> findBCrypt(@PathVariable String pass) {

@@ -4,6 +4,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "UserAccount")
@@ -26,6 +28,11 @@ public class UserAccount implements Serializable {
     @org.hibernate.annotations.Type(type="true_false")
     @Column(name = "status")
     private Boolean status;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},
+            mappedBy = "userAccount")
+    private Set<UserAccount_Role> userAccount_roles = new HashSet<UserAccount_Role>(0);
 
     public UserAccount(Long id, String userName, String passWord, Boolean status) {
         this.id = id;
@@ -67,5 +74,13 @@ public class UserAccount implements Serializable {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public Set<UserAccount_Role> getUserAccount_roles() {
+        return userAccount_roles;
+    }
+
+    public void setUserAccount_roles(Set<UserAccount_Role> userAccount_roles) {
+        this.userAccount_roles = userAccount_roles;
     }
 }

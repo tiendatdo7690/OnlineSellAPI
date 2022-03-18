@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.entities.UserAccount;
-import com.example.demo.respositories.AccountRespositories;
+import com.example.demo.respositories.AccountRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl implements AccountService{
 
     @Autowired
-    private AccountRespositories accountRespositories;
+    private AccountRespository accountRespositories;
 
     @Override
     public UserAccount save(UserAccount userAccount) {
