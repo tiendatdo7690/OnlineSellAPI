@@ -21,7 +21,6 @@ public class UserAccount implements Serializable {
     @Column(name = "userName", length = 255)
     private String userName;
 
-    @Type(type="org.hibernate.type.StringNVarcharType")
     @Column(name = "passWord", length = 255)
     private String passWord;
 

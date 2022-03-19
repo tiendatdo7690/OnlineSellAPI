@@ -77,6 +77,16 @@ public class Product implements Serializable {
         this.discounts = discounts;
     }
 
+    public Product(String name, String description, int inventoryNumber, Date dateSell, Boolean status, SalesMan salesMan, Category category) {
+        this.name = name;
+        this.description = description;
+        this.inventoryNumber = inventoryNumber;
+        this.dateSell = dateSell;
+        this.status = status;
+        this.salesMan = salesMan;
+        this.category = category;
+    }
+
     public Product() {
     }
 

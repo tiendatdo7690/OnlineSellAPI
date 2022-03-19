@@ -69,6 +69,10 @@ public class SalesMan implements Serializable {
         this.products = products;
     }
 
+    public SalesMan(Long id) {
+        this.id = id;
+    }
+
     public SalesMan() {
     }
 
