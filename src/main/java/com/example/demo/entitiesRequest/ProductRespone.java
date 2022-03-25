@@ -1,12 +1,13 @@
 package com.example.demo.entitiesRequest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ProductRequest {
+public class ProductRespone {
 
     private Long id;
 
@@ -25,14 +26,15 @@ public class ProductRequest {
 
     private Long idCategory;
 
-    private FileRequest avatar;
+    private Double price;
 
-    private List<FileRequest> images;
+    private String urlFileAvatar;
 
-    public ProductRequest() {
-    }
+    private List<String> images;
 
-    public ProductRequest(Long id, String name, String description, int inventoryNumber, Date dateSell, Boolean status, Long idSalesMan, Long idCategory) {
+
+    public ProductRespone(Long id, String name, String description, int inventoryNumber, Date dateSell, Boolean status,
+                          Long idSalesMan, Long idCategory, String urlFileAvatar) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,9 +43,12 @@ public class ProductRequest {
         this.status = status;
         this.idSalesMan = idSalesMan;
         this.idCategory = idCategory;
-        this.images = new ArrayList<FileRequest>();
+        this.urlFileAvatar = urlFileAvatar;
+        images = new ArrayList<String>();
     }
 
+    public ProductRespone() {
+    }
 
     public Long getId() {
         return id;
@@ -109,33 +114,27 @@ public class ProductRequest {
         this.idCategory = idCategory;
     }
 
-    public FileRequest getAvatar() {
-        return avatar;
+    public String getUrlFileAvatar() {
+        return urlFileAvatar;
     }
 
-    public void setAvatar(FileRequest avatar) {
-        this.avatar = avatar;
+    public void setUrlFileAvatar(String urlFileAvatar) {
+        this.urlFileAvatar = urlFileAvatar;
     }
 
-    public List<FileRequest> getImages() {
+    public List<String> getImages() {
         return images;
     }
 
-    public void setImages(List<FileRequest> images) {
+    public void setImages(List<String> images) {
         this.images = images;
     }
 
-    @Override
-    public String toString() {
-        return "ProductRequest{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", inventoryNumber=" + inventoryNumber +
-                ", dateSell=" + dateSell +
-                ", status=" + status +
-                ", idSalesMan=" + idSalesMan +
-                ", idCategory=" + idCategory +
-                '}';
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

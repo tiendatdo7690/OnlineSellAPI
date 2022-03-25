@@ -32,6 +32,10 @@ public class Address implements Serializable {
             mappedBy = "address")
     private Set<OrderProduct> orders = new HashSet<OrderProduct>(0);
 
+    public Address(Long id) {
+        this.id = id;
+    }
+
     public Address() {
     }
 

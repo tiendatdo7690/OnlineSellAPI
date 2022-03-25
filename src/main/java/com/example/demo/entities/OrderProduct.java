@@ -52,6 +52,10 @@ public class OrderProduct implements Serializable {
     public OrderProduct() {
     }
 
+    public OrderProduct(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

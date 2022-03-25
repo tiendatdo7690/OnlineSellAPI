@@ -33,6 +33,10 @@ public class Product implements Serializable {
     @Column(name = "dateSell")
     private Date dateSell;
 
+    @Type(type="org.hibernate.type.StringNVarcharType")
+    @Column(name = "urlAvatar", length = 255)
+    private String urlAvatar;
+
     @org.hibernate.annotations.Type(type="true_false")
     @Column(name = "status")
     private Boolean status;
@@ -62,6 +66,11 @@ public class Product implements Serializable {
             mappedBy = "product")
     private Set<Discount> discounts = new HashSet<Discount>(0);
 
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},
+            mappedBy = "product")
+    private Set<Price> prices = new HashSet<Price>(0);
+
     public Product(Long id, String name, String description, int inventoryNumber, Date dateSell, Boolean status,
                    SalesMan salesMan, Category category, Set<Image> images, Set<OrderProduct> orders, Set<Discount> discounts) {
         this.id = id;
@@ -75,6 +84,10 @@ public class Product implements Serializable {
         this.images = images;
         this.orders = orders;
         this.discounts = discounts;
+    }
+
+    public Product(Long id) {
+        this.id = id;
     }
 
     public Product(String name, String description, int inventoryNumber, Date dateSell, Boolean status, SalesMan salesMan, Category category) {
@@ -176,5 +189,21 @@ public class Product implements Serializable {
 
     public void setDiscounts(Set<Discount> discounts) {
         this.discounts = discounts;
+    }
+
+    public String getUrlAvatar() {
+        return urlAvatar;
+    }
+
+    public void setUrlAvatar(String urlAvatar) {
+        this.urlAvatar = urlAvatar;
+    }
+
+    public Set<Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Set<Price> prices) {
+        this.prices = prices;
     }
 }

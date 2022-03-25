@@ -50,6 +50,12 @@ public class SalesMan implements Serializable {
     @Column(name = "address", length = 255)
     private String address;
 
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    @JoinColumn(name = "useraccount_id" , foreignKey= @ForeignKey(name = "Fk_user_SalesMan"), nullable = true,
+            unique = true)
+    private UserAccount userAccount;
+
     @OneToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH},
             mappedBy = "salesMan")
@@ -154,5 +160,13 @@ public class SalesMan implements Serializable {
 
     public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 }

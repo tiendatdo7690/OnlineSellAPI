@@ -26,10 +26,10 @@ public class DeliveryProcess implements Serializable {
     @Column(name = "intendedDeliveryDate")
     private Date intendedDeliveryDate;
 
-
     @ManyToOne(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
-    @JoinColumn(name = "order_id" , foreignKey= @ForeignKey(name = "Fk_order_DeliveryProcess"), nullable = true)
+    @JoinColumn(name = "order_id" , foreignKey= @ForeignKey(name = "Fk_order_DeliveryProcess"), nullable = true,
+            unique = true)
     private OrderProduct order;
 
     @OneToMany(fetch = FetchType.LAZY,

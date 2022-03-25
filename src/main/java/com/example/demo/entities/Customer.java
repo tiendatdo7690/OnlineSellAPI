@@ -56,6 +56,12 @@ public class Customer implements Serializable {
             mappedBy = "customer")
     private Set<OrderProduct> orders = new HashSet<OrderProduct>(0);
 
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    @JoinColumn(name = "useraccount_id" , foreignKey= @ForeignKey(name = "Fk_user_Customer"), nullable = true,
+            unique = true)
+    private UserAccount userAccount;
+
     public Customer(Long id, String name, Date birthDay, String phone, String urlImage, Boolean sex, String nationality,
                     String email, Set<Address> addresses, Set<OrderProduct> orders) {
         this.id = id;
@@ -69,6 +75,10 @@ public class Customer implements Serializable {
         this.addresses = addresses;
 
         this.orders = orders;
+    }
+
+    public Customer(Long id) {
+        this.id = id;
     }
 
     public Customer() {

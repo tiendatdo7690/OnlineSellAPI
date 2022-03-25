@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.entities.UserAccount;
-import com.example.demo.entitiesAPI.UserAccountAPI;
 import com.example.demo.entitiesRequest.CategoryRequest;
 import com.example.demo.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,19 @@ public class CategoryRestController {
 
         try {
             List<CategoryRequest> categoryRequests = categoryService.findAll();
+            return new ResponseEntity<List<CategoryRequest>>(categoryRequests,
+                    HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<List<CategoryRequest>>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "findallbyname/{name}" ,method = RequestMethod.GET, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CategoryRequest>> findAllByName(@PathVariable String name) {
+
+        try {
+            List<CategoryRequest> categoryRequests = categoryService.findAllCategoryByName(name);
             return new ResponseEntity<List<CategoryRequest>>(categoryRequests,
                     HttpStatus.OK);
         }
